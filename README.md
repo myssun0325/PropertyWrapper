@@ -244,6 +244,44 @@ wrappedValue를 프로퍼티래퍼를 붙여준 변수를 통해 접근할 수 �
 다른 타입에서 projected value에 접근할 때, property getter or an instance method `self.` 를 생략할 수 있음. 
 
 ```swift
+
+@propertyWrapper
+struct SmallNumber {
+    private var number: Int
+    private(set) var projectedValue: Bool
+
+    var wrappedValue: Int {
+        get { return number }
+        set {
+            if newValue > 12 {
+                number = 12
+                projectedValue = true
+            } else {
+                number = newValue
+                projectedValue = false
+            }
+        }
+    }
+
+    init() {
+        self.number = 0
+        self.projectedValue = false
+    }
+}
+struct SomeStructure {
+    @SmallNumber var someNumber: Int
+}
+var someStructure = SomeStructure()
+
+someStructure.someNumber = 4
+print(someStructure.$someNumber)
+// Prints "false"
+
+someStructure.someNumber = 55
+print(someStructure.$someNumber)
+// Prints "true"
+
+
 enum Size {
     case small, large
 }
