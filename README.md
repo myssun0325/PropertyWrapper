@@ -304,8 +304,10 @@ struct SizedRectangle {
 }
 
 var sizedRectangle = SizedRectangle()
-print(sizedRectangle.resize(to: .small))
-print(sizedRectangle.resize(to: .large))
+// true true false
+print(sizedRectangle.resize(to: .small), sizedRectangle.$width, sizedRectangle.$height)
+// true true true
+print(sizedRectangle.resize(to: .large), sizedRectangle.$width, sizedRectangle.$height) 
 ```
 
 ## 장점 - 재사용성, 중복제거, 가독성 향상
